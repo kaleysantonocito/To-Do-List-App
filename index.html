@@ -71,14 +71,31 @@
 
             <div class="current-task">
                 <!-- Current task will be displayed here -->
+                 <p>CURRENTLY WORKING ON</p>
+                 <span id="currentTask">No task selected</span>
             </div>
 
             <div class="focus-timer">
-
+                <div class="timer-circle">
+                    <span id="timerDisplay">00:00</span>
+                </div>
             </div>
 
+            <p>Session duration</p>
             <div class="session-settings">
-                <!-- Session settings will be displayed here -->
+
+                 <select id="sessionDuration">
+                     <option value="15">15 minutes</option>
+                     <option value="30">30 minutes</option>
+                     <option value="45">45 minutes</option>
+                     <option value="60">60 minutes</option>
+                     <!-- add more -->
+                 </select>
+
+                 <div class="timer-buttons">
+                    <button>Start/Stop</button>
+                    <button>Reset</button>
+                 </div>
             </div>
             
         </div>
