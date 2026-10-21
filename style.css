@@ -1,0 +1,154 @@
+body {
+    background-color: #F7F5EE;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    font-size: 24px;
+    margin-top: 0;
+}
+
+/* Task side */
+
+.tasks-and-focus {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    align-items: stretch;
+}
+
+.my-tasks, .focus-session {
+    flex: 1; /* space evenly */
+    background-color: #FFFDF8;
+    padding: 20px;
+    border: 1px solid #E9E4D8;
+    border-radius: 10px;
+}
+
+/* Add task section */
+.add-task {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add-task input {
+    font-size: 14px;
+    border: 1px solid #E9E4D8;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+.task-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.task-controls select {
+    flex: 1;
+    font-size: 14px;
+    background-color: white;
+    border: 1px solid #E9E4D8;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.task-controls button {
+    font-size: 14px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.task-controls button:hover {
+    background-color: #F0F1E6;
+    color: #403F32;
+}
+
+
+/* Task cards */
+
+.task-card {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #E9E4D8;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.task-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.task-title {
+    font-size: 16px;
+}
+
+.task-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.task-actions button {
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+}
+
+.task-actions button:hover {
+    background-color: #F0F1E6;
+    color: #403F32;
+}
+
+.task-bottom {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.task-bottom button {
+    background-color: white;
+    border: 1px solid #E9E4D8;
+    border-radius: 10px;
+    padding: 5px 10px;  
+}
+
+.task-bottom button:hover {
+    background-color: #F0F1E6;
+    color: #403F32;
+}
+
+.priority-label {
+    background-color: #FF6B6B;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 10px;
+    width: fit-content;
+    font-size: 12px;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+input[type="checkbox"]:checked {
+    background-color: black;
+}
+
