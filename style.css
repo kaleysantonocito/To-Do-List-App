@@ -9,8 +9,6 @@ h1 {
     margin-top: 0;
 }
 
-/* Task side */
-
 .tasks-and-focus {
     display: flex;
     gap: 20px;
@@ -25,6 +23,8 @@ h1 {
     border: 1px solid #E5DDD1;
     border-radius: 10px;
 }
+
+/* Task side */
 
 hr {
     border: 1px solid #E5DDD1;
@@ -177,4 +177,58 @@ input[type="checkbox"]:checked {
 .priority-low {
     background-color: #E8EEDF;
     color: #405842;
+}
+
+/* Focus session */
+
+.current-task {
+    background-color: #E8EEDF;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.session-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.session-settings select {
+    flex: 1;
+    font-size: 14px;
+    background-color: white;
+    border: 1px solid #E5DDD1;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.timer-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.timer-buttons button {  
+    font-size: 14px;
+    background-color: #BC765B;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 15px;
+}
+
+.timer-buttons button:hover {
+    background-color: #9D5139;
+    color: white;
+}
+
+.focus-timer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+#timerDisplay {
+    font-size: 36px;
+    font-weight: 500;
 }
