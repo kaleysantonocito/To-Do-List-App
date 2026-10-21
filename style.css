@@ -1,6 +1,7 @@
 body {
     background-color: #F7F5EE;
     font-family: Arial, sans-serif;
+    color: #405842;
 }
 
 h1 {
@@ -21,8 +22,14 @@ h1 {
     flex: 1; /* space evenly */
     background-color: #FFFDF8;
     padding: 20px;
-    border: 1px solid #E9E4D8;
+    border: 1px solid #E5DDD1;
     border-radius: 10px;
+}
+
+hr {
+    border: 1px solid #E5DDD1;
+    color: #E5DDD1;
+    margin-bottom: 20px;
 }
 
 /* Add task section */
@@ -35,7 +42,7 @@ h1 {
 
 .add-task input {
     font-size: 14px;
-    border: 1px solid #E9E4D8;
+    border: 1px solid #E5DDD1;
     border-radius: 10px;
     padding: 8px;
 }
@@ -49,14 +56,14 @@ h1 {
     flex: 1;
     font-size: 14px;
     background-color: white;
-    border: 1px solid #E9E4D8;
+    border: 1px solid #E5DDD1;
     border-radius: 10px;
     padding: 12px;
 }
 
 .task-controls button {
     font-size: 14px;
-    background-color: black;
+    background-color: #BC765B;
     color: white;
     border: none;
     border-radius: 10px;
@@ -64,8 +71,8 @@ h1 {
 }
 
 .task-controls button:hover {
-    background-color: #F0F1E6;
-    color: #403F32;
+    background-color: #9D5139;
+    color: white;
 }
 
 
@@ -74,7 +81,7 @@ h1 {
 .task-card {
     background-color: white;
     padding: 10px;
-    border: 1px solid #E9E4D8;
+    border: 1px solid #E5DDD1;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -107,11 +114,12 @@ h1 {
     background-color: transparent;
     border: none;
     padding: 5px;
+    color: #405842;
 }
 
 .task-actions button:hover {
-    background-color: #F0F1E6;
-    color: #403F32;
+    background-color: #E8EEDF;
+    color: #405842;
 }
 
 .task-bottom {
@@ -121,34 +129,51 @@ h1 {
 
 .task-bottom button {
     background-color: white;
-    border: 1px solid #E9E4D8;
+    color: #405842;
+    border: 1px solid #84966B;
     border-radius: 10px;
     padding: 5px 10px;  
 }
 
 .task-bottom button:hover {
-    background-color: #F0F1E6;
-    color: #403F32;
+    background-color: #E8EEDF;
+    color: #405842;
 }
 
+/* Check boxes */
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    border: 1px solid #84966B;
+    border-radius: 10px;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #84966B;
+}
+
+/* Priority labels */
+
 .priority-label {
-    background-color: #FF6B6B;
-    color: white;
     padding: 2px 5px;
     border-radius: 10px;
     width: fit-content;
     font-size: 12px;
 }
 
-input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    appearance: none;
-    border: 1px solid black;
-    border-radius: 10px;
+.priority-high {
+    background-color: #E8B4B0;
+    color: #873F3F;
 }
 
-input[type="checkbox"]:checked {
-    background-color: black;
+.priority-medium {
+    background-color: #F0DFAD;
+    color: #80652F;
 }
 
+.priority-low {
+    background-color: #E8EEDF;
+    color: #405842;
+}
