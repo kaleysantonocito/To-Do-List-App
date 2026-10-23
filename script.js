@@ -111,8 +111,61 @@ function displayTasks() {
             taskInfo.appendChild(title); // add the title to the task info div if not editing
         }
 
-        taskInfo.appendChild(priority); // add the priority to the task info div
         
+        if (editingTask === task) { // checks if this task is being edited
+            const editPriority = document.createElement("select"); // creates priority dropdown
+
+            ["Low", "Medium", "High"].forEach(function(level) { // loops through priority levels
+                const option = document.createElement("option"); // creates an option
+                option.value = level; // sets option value
+                option.textContent = level; // displays priority name
+                editPriority.appendChild(option); // adds option to dropdown
+            });
+
+            editPriority.value = task.priority; // selects current task priority
+            taskInfo.appendChild(editPriority); // adds dropdown below title input
+
+            // Edit Form Buttons
+
+            const editButtons = document.createElement("div"); // creates container for both buttons
+            editButtons.className = "edit-buttons"; // assigns CSS class
+
+            const cancelButton = document.createElement("button"); // creates Cancel button
+            cancelButton.textContent = "Cancel"; // adds button text
+            cancelButton.className = "cancel-button"; // assigns CSS class
+
+            cancelButton.addEventListener("click", function() { // runs when Cancel is clicked
+                editingTask = null; // exits editing mode
+                displayTasks(); // redraws original task card
+            });
+
+            const saveButton = document.createElement("button"); // creates Save button
+            saveButton.textContent = "Save Changes"; // adds button text
+            saveButton.className = "save-button"; // assigns CSS class
+
+            saveButton.addEventListener("click", function() { // runs when Save Changes is clicked
+                const newTitle = taskInfo.querySelector("input").value.trim(); // gets edited title
+
+                if (newTitle === "") { // checks for an empty title
+                    alert("Task title cannot be empty."); // displays error
+                    return; // stops saving
+                }
+
+                task.title = newTitle; // saves the new title
+                task.priority = editPriority.value; // saves the selected priority
+                editingTask = null; // exits editing mode
+                displayTasks(); // redraws task card with changes
+            });
+
+            editButtons.appendChild(cancelButton); // adds Cancel to button container
+            editButtons.appendChild(saveButton); // adds Save Changes next to Cancel
+            taskInfo.appendChild(editButtons); // places both buttons under the dropdown
+
+        } else {
+            taskInfo.appendChild(priority); // shows normal priority label when not editing
+        }
+
+
         taskTop.appendChild(checkbox); // add the checkbox to the task top div
         taskTop.appendChild(taskInfo); // add the task info div to the task card
         

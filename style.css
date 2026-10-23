@@ -242,3 +242,48 @@ input[type="checkbox"]:checked {
     background-color: #E8EEDF;
     border-color: #84966B;
 }
+
+/* Tack editing form */
+
+.task-info:has(.edit-buttons) {
+    gap: 10px;
+}
+
+.task-info:has(.edit-buttons) input,  
+.task-info:has(.edit-buttons) select {
+    border: 1px solid #E5DDD1;
+    border-radius: 10px;
+    background-color: white;
+    color: #405842;
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.cancel-button {
+    background-color: white;
+    color: #405842;
+    border: 1px solid #E5DDD1;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.cancel-button:hover { 
+    background-color: #E8EEDF;
+}
+
+.save-button {
+    background-color: #BC765B;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.save-button:hover {
+    background-color: #9D5139;
+}
