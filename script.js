@@ -8,6 +8,7 @@ const taskList = document.querySelector('.task-list'); // gets the element to di
 // Add task functionality
 
 const tasks = []; // array to store tasks
+let editingTask = null; // stores the task currently being edited
 
 addTaskButton.addEventListener('click', function() { // click event for add task button
     const taskValue = taskInput.value.trim(); // gets the text entered by user, trim removes spaces from beginning and end of string
@@ -72,6 +73,11 @@ function displayTasks() {
             </svg>
         `;
 
+        editButton.addEventListener('click', function() { // edit task on click
+            editingTask = task; // stores the task the user clicked
+            displayTasks(); // refresh the task list to reflect the editing state
+        });
+
         const deleteButton = document.createElement('button');
         deleteButton.className = 'delete-button';
         deleteButton.setAttribute('aria-label', 'Delete task'); 
@@ -96,7 +102,15 @@ function displayTasks() {
         doingNowButton.className = 'doing-now-button'; // applies doing-now-button CSS class
         doingNowButton.textContent = 'Doing Now'; // sets the button text
         
-        taskInfo.appendChild(title); // add the title to the task info div
+        if (editingTask === task) { // check if the current task is being edited
+            const editInput = document.createElement('input'); // create an input field for editing
+            editInput.type = 'text'; // set input type to text
+            editInput.value = task.title; // set input value to current task title
+            taskInfo.appendChild(editInput); // add the input field to the task info div
+        } else {
+            taskInfo.appendChild(title); // add the title to the task info div if not editing
+        }
+
         taskInfo.appendChild(priority); // add the priority to the task info div
         
         taskTop.appendChild(checkbox); // add the checkbox to the task top div
