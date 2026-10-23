@@ -27,7 +27,7 @@ addTaskButton.addEventListener('click', function() { // click event for add task
 
     tasks.push(task); // add the task to the tasks array, push() adds an element to the end of the array
     
-    taskCount.textContent = tasks.length + " tasks remaining."; // update the task count
+    updateTaskCount(); // update the task count
 
     displayTasks(); // call displayTasks function to update the task list
 });
@@ -40,6 +40,10 @@ function displayTasks() {
     tasks.forEach(function(task) { // loops through each task in array
         const card = document.createElement('div'); // create a div element for the task card
         card.className = 'task-card'; // assign a class name to the task card
+
+        if (task.completed) {
+            card.classList.add('completed'); // adds completed class if task is completed, task will be crossed out
+        }
 
         const taskInfo = document.createElement("div"); // creates a div for task information
         taskInfo.className = 'task-info'; // assigns task-info CSS class
@@ -58,6 +62,14 @@ function displayTasks() {
         
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
+
+        checkbox.checked = task.completed; // sets checkbox based on whether task is completed
+
+        checkbox.addEventListener('change', function() { // runs when checkbox is checked or unchecked
+            task.completed = checkbox.checked; // updates the task's completed status
+            updateTaskCount(); // update the task count
+            displayTasks(); // refresh the task list to reflect the change
+        });
 
         const taskActions = document.createElement('div');
         taskActions.className = 'task-actions';
@@ -165,6 +177,7 @@ function displayTasks() {
             taskInfo.appendChild(priority); // shows normal priority label when not editing
         }
 
+        // positioning task elements within the card
 
         taskTop.appendChild(checkbox); // add the checkbox to the task top div
         taskTop.appendChild(taskInfo); // add the task info div to the task card
@@ -179,4 +192,13 @@ function displayTasks() {
         card.appendChild(taskBottom); // add the task bottom div to the task card
         taskList.appendChild(card); // add the new task card to the task list
     });
+}
+
+// update task count functionality
+
+function updateTaskCount() { // updates the task count display
+    const activeTasks = tasks.filter(function(task) {
+        return task.completed === false;
+    });
+    taskCount.textContent = activeTasks.length + " tasks remaining";
 }
