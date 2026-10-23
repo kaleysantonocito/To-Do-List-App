@@ -232,3 +232,13 @@ input[type="checkbox"]:checked {
     font-size: 36px;
     font-weight: 500;
 }
+
+.task-card.completed .task-title {
+    color: gray;
+    text-decoration: line-through;
+}
+
+.task-card.doing-now {
+    background-color: #E8EEDF;
+    border-color: #84966B;
+}
