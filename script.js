@@ -82,6 +82,13 @@ function displayTasks() {
             </svg>
         `;
 
+        deleteButton.addEventListener('click', function() { // delete task on click
+            const index = tasks.indexOf(task); // finds task's position in array
+            tasks.splice(index, 1); // removes one task from the array
+            taskCount.textContent = tasks.length + " tasks remaining."; // update the task count
+            displayTasks(); // refresh the task list to reflect the deletion
+        })
+
         const taskBottom = document.createElement('div'); // creates the bottom section of task card
         taskBottom.className = 'task-bottom'; // applies task-bottom CSS class
 
@@ -100,7 +107,7 @@ function displayTasks() {
         taskTop.appendChild(taskActions); // add the task actions div to the task top div
         
         taskBottom.appendChild(doingNowButton); // add the "Doing Now" button to the task bottom div
-        
+
         card.appendChild(taskTop); // add the task top div to the task card
         card.appendChild(taskBottom); // add the task bottom div to the task card
         taskList.appendChild(card); // add the new task card to the task list
