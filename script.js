@@ -3,13 +3,14 @@ const taskInput = document.getElementById('taskInput'); // gets task input field
 const taskPriority = document.getElementById('taskPriority'); // gets task priority dropdown
 const taskCount = document.getElementById('taskCount'); // gets the element to display task count
 const taskList = document.querySelector('.task-list'); // gets the element to display the list of tasks
-
+const currentTask = document.getElementById('currentTask'); // gets the element to display the current task
 
 // Add task functionality
 
 const tasks = []; // array to store tasks
 let editingTask = null; // stores the task currently being edited
 let completedCount = 0; // keeps track of the order of completed tasks
+let doingNowTask = null; // stores the task currently being done
 
 addTaskButton.addEventListener('click', function() { // click event for add task button
     const taskValue = taskInput.value.trim(); // gets the text entered by user, trim removes spaces from beginning and end of string
@@ -145,6 +146,11 @@ function displayTasks() {
         doingNowButton.className = 'doing-now-button'; // applies doing-now-button CSS class
         doingNowButton.textContent = 'Doing Now'; // sets the button text
         
+        doingNowButton.addEventListener('click', function() { // runs when Doing Now is clicked
+            doingNowTask = task; // remembers which task was selected
+            currentTask.textContent = task.title; // displays its title in the focus session area
+        })
+
         if (editingTask === task) { // check if the current task is being edited
             const editInput = document.createElement('input'); // create an input field for editing
             editInput.type = 'text'; // set input type to text
