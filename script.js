@@ -196,6 +196,16 @@ function displayTasks() {
 
                 task.title = newTitle; // saves the new title
                 task.priority = editPriority.value; // saves the selected priority
+                
+                // update task priority
+                if (task.priority !== editPriority.value) { // checks if priority has changed
+                    task.priority = editPriority.value; // saves new priority
+
+                    const index = tasks.indexOf(task); // finds the task in original array
+                    tasks.splice(index, 1); // removes it from old position
+                    tasks.push(task); // moves it to end of the array 
+                }
+
                 editingTask = null; // exits editing mode
                 displayTasks(); // redraws task card with changes
             });
