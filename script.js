@@ -37,7 +37,28 @@ addTaskButton.addEventListener('click', function() { // click event for add task
 function displayTasks() {
     taskList.innerHTML = ""; // clears existing task cards before displaying updated list
     
-    tasks.forEach(function(task) { // loops through each task in array
+
+    const priorityOrder = { // asigns a number to each priority level for sorting purposes
+        High: 1,
+        Medium: 2,
+        Low: 3
+    }
+
+    const sortedTasks = [...tasks].sort(function(a, b) { // creates a copy of the tasks array and sorts it, [...tasks] ... is a spread operator
+        
+        if (a.completed !== b.completed) { // checking if one task is completed and the other is not
+            return a.completed ? 1 : -1; // completed tasks go to the end
+        }
+
+        if (a.completed && b.completed) {
+            return 0; // if both tasks are completed, maintain their order
+        }
+        
+        return priorityOrder[a.priority] - priorityOrder[b.priority]; //compares the priority of two tasks for sorting
+    });
+
+
+    sortedTasks.forEach(function(task) { // loops through each task in the sorted array
         const card = document.createElement('div'); // create a div element for the task card
         card.className = 'task-card'; // assign a class name to the task card
 
