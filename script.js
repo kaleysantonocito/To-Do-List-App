@@ -9,6 +9,7 @@ const taskList = document.querySelector('.task-list'); // gets the element to di
 
 const tasks = []; // array to store tasks
 let editingTask = null; // stores the task currently being edited
+let completedCount = 0; // keeps track of the order of completed tasks
 
 addTaskButton.addEventListener('click', function() { // click event for add task button
     const taskValue = taskInput.value.trim(); // gets the text entered by user, trim removes spaces from beginning and end of string
@@ -51,7 +52,7 @@ function displayTasks() {
         }
 
         if (a.completed && b.completed) {
-            return 0; // if both tasks are completed, maintain their order
+            return a.completionOrder - b.completionOrder; // sort completed tasks by their completion order
         }
         
         return priorityOrder[a.priority] - priorityOrder[b.priority]; //compares the priority of two tasks for sorting
@@ -87,7 +88,16 @@ function displayTasks() {
         checkbox.checked = task.completed; // sets checkbox based on whether task is completed
 
         checkbox.addEventListener('change', function() { // runs when checkbox is checked or unchecked
-            task.completed = checkbox.checked; // updates the task's completed status
+            task.completed = checkbox.checked; // updates the task's completed status   
+            
+            if (task.completed == true) {
+                completedCount++; // increment the completed task count
+                task.completionOrder = completedCount; // saves the completion order for the task
+            }
+            else {
+                task.completionOrder = null; // reset the completion order when task is unchecked
+            }
+
             updateTaskCount(); // update the task count
             displayTasks(); // refresh the task list to reflect the change
         });
