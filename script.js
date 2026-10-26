@@ -141,7 +141,7 @@ function displayTasks() {
         deleteButton.addEventListener('click', function() { // delete task on click
             const index = tasks.indexOf(task); // finds task's position in array
             tasks.splice(index, 1); // removes one task from the array
-            taskCount.textContent = tasks.length + " tasks remaining."; // update the task count
+            updateTaskCount(); // update the task count
             displayTasks(); // refresh the task list to reflect the deletion
         })
 
@@ -219,7 +219,6 @@ function displayTasks() {
                 }
 
                 task.title = newTitle; // saves the new title
-                task.priority = editPriority.value; // saves the selected priority
                 
                 // update task priority
                 if (task.priority !== editPriority.value) { // checks if priority has changed
