@@ -287,3 +287,8 @@ input[type="checkbox"]:checked {
 .save-button:hover {
     background-color: #9D5139;
 }
+
+.task-card.doing-now {
+    border: 2px solid #84966B;
+    background-color: #E8EEDF;
+}

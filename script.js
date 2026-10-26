@@ -64,6 +64,12 @@ function displayTasks() {
         const card = document.createElement('div'); // create a div element for the task card
         card.className = 'task-card'; // assign a class name to the task card
 
+
+        // highlight doing now task
+        if (doingNowTask === task) {
+            card.classList.add('doing-now');
+        }
+
         if (task.completed) {
             card.classList.add('completed'); // adds completed class if task is completed, task will be crossed out
         }
@@ -149,6 +155,7 @@ function displayTasks() {
         doingNowButton.addEventListener('click', function() { // runs when Doing Now is clicked
             doingNowTask = task; // remembers which task was selected
             currentTask.textContent = task.title; // displays its title in the focus session area
+            displayTasks(); // refresh the task list to highlight the current task
         })
 
         if (editingTask === task) { // check if the current task is being edited
