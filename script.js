@@ -152,6 +152,11 @@ function displayTasks() {
         doingNowButton.className = 'doing-now-button'; // applies doing-now-button CSS class
         doingNowButton.textContent = 'Doing Now'; // sets the button text
         
+        // disable doing now button if the task is already completed
+        if (task.completed === true) {
+            doingNowButton.disabled = true; 
+        }
+
         doingNowButton.addEventListener('click', function() { // runs when Doing Now is clicked
             if (doingNowTask === task) { // checks if task is already selected
                 doingNowTask = null; // clears selected task
