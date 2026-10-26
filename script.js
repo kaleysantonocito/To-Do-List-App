@@ -100,6 +100,11 @@ function displayTasks() {
             if (task.completed == true) {
                 completedCount++; // increment the completed task count
                 task.completionOrder = completedCount; // saves the completion order for the task
+
+                if (doingNowTask === task) { // clears the current task if it's marked as completed
+                    doingNowTask = null;
+                    currentTask.textContent = "No task selected.";
+                }
             }
             else {
                 task.completionOrder = null; // reset the completion order when task is unchecked
@@ -141,9 +146,16 @@ function displayTasks() {
         deleteButton.addEventListener('click', function() { // delete task on click
             const index = tasks.indexOf(task); // finds task's position in array
             tasks.splice(index, 1); // removes one task from the array
+            
+            // clear current task if task is deleted
+            if (doingNowTask === task) {
+                doingNowTask = null;
+                currentTask.textContent = "No task selected.";
+            }
+
             updateTaskCount(); // update the task count
             displayTasks(); // refresh the task list to reflect the deletion
-        })
+        }); 
 
         const taskBottom = document.createElement('div'); // creates the bottom section of task card
         taskBottom.className = 'task-bottom'; // applies task-bottom CSS class
