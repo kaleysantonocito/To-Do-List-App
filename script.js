@@ -153,8 +153,14 @@ function displayTasks() {
         doingNowButton.textContent = 'Doing Now'; // sets the button text
         
         doingNowButton.addEventListener('click', function() { // runs when Doing Now is clicked
-            doingNowTask = task; // remembers which task was selected
-            currentTask.textContent = task.title; // displays its title in the focus session area
+            if (doingNowTask === task) { // checks if task is already selected
+                doingNowTask = null; // clears selected task
+                currentTask.textContent = "No task selected"; // clear the current task display area
+            } else {
+                doingNowTask = task; // sets the selected task
+                currentTask.textContent = task.title; // displays its title in focus session area
+            }
+            
             displayTasks(); // refresh the task list to highlight the current task
         })
 
