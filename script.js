@@ -17,6 +17,8 @@ let editingTask = null; // stores the task currently being edited
 let completedCount = 0; // keeps track of the order of completed tasks
 let doingNowTask = null; // stores the task currently being done
 let timeRemaining = Number(sessionDuration.value) * 60 // stores selected duration in seconds
+let timerInterval = null; // stores the countdown interval for the timer
+
 
 addTaskButton.addEventListener('click', function() { // click event for add task button
     const taskValue = taskInput.value.trim(); // gets the text entered by user, trim removes spaces from beginning and end of string
@@ -299,4 +301,43 @@ updateTimerDisplay();
 sessionDuration.addEventListener('change', function() { //runs when the duration dropdown changes
     timeRemaining = Number(sessionDuration.value) * 60; // converts selected minutes into seconds
     updateTimerDisplay(); // updates visual timer display
+});
+
+// start timer funcitonality 
+function startTimer() { // starts countdown timer 
+    if (timerInterval !== null) { // checks whether timer is already running 
+        return; // prevents multiple timers from running simultaneously
+    }
+
+    timerInterval = setInterval(function() { // runs this every second
+        timeRemaining--; // subtracts 1 second from remaining time 
+        updateTimerDisplay(); // updates the visual timer display
+
+        if (timeRemaining <= 0) { // checks if countdown has finished
+            clearInterval(timerInterval); // stops the timer
+            timerInterval = null; // marks the timer as no longer running 
+        }
+    }
+    , 1000); // interval runs every 1000 milliseconds (1 second)
+
+}
+
+// start/stop button functionality
+startStopButton.addEventListener('click', function() { // handles start/stop button click
+    if (timerInterval !== null) { // checks if timer is currently running
+        clearInterval(timerInterval); // stops the timer
+        timerInterval = null; // marks the timer as no longer running
+    } else {
+        startTimer(); // starts the timer if it is not already running
+    }
+});
+
+// reset button functionality
+
+resetButton.addEventListener('click', function() { // handles reset button click    
+    clearInterval(timerInterval); // stops the timer
+    timerInterval = null; // marks the timer as no longer running
+    
+    timeRemaining = Number(sessionDuration.value) * 60; // resets the remaining time to the selected session duration
+    updateTimerDisplay(); // updates the visual timer display
 });
