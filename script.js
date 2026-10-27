@@ -112,6 +112,8 @@ function displayTasks() {
                 if (doingNowTask === task) { // clears the current task if it's marked as completed
                     doingNowTask = null;
                     currentTask.textContent = "No task selected.";
+                    resetTimer();
+                    startStopButton.disabled = true;
                 }
             }
             else {
@@ -159,6 +161,9 @@ function displayTasks() {
             if (doingNowTask === task) {
                 doingNowTask = null;
                 currentTask.textContent = "No task selected.";
+
+                resetTimer();
+                startStopButton.disabled = true;
             }
 
             updateTaskCount(); // update the task count
@@ -186,6 +191,9 @@ function displayTasks() {
                 currentTask.textContent = task.title; // displays its title in focus session area
             }
             
+            resetTimer(); // reset the timer whenever the current task changes
+            startStopButton.disabled = doingNowTask === null; // enable start/stop button only if a task is selected
+
             displayTasks(); // refresh the task list to highlight the current task
         })
 
@@ -334,10 +342,14 @@ startStopButton.addEventListener('click', function() { // handles start/stop but
 
 // reset button functionality
 
-resetButton.addEventListener('click', function() { // handles reset button click    
+function resetTimer() { // resets the timer to the selected session duration
     clearInterval(timerInterval); // stops the timer
     timerInterval = null; // marks the timer as no longer running
-    
+
     timeRemaining = Number(sessionDuration.value) * 60; // resets the remaining time to the selected session duration
     updateTimerDisplay(); // updates the visual timer display
-});
+}
+
+    resetButton.addEventListener('click', function() { // handles reset button click    
+        resetTimer(); // calls the resetTimer function
+    });
