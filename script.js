@@ -4,6 +4,11 @@ const taskPriority = document.getElementById('taskPriority'); // gets task prior
 const taskCount = document.getElementById('taskCount'); // gets the element to display task count
 const taskList = document.querySelector('.task-list'); // gets the element to display the list of tasks
 const currentTask = document.getElementById('currentTask'); // gets the element to display the current task
+const timerDisplay = document.getElementById('timerDisplay'); // gets the element to display the timer
+const startStopButton = document.getElementById('startStopButton'); // gets the start/stop button
+const resetButton = document.getElementById('resetButton'); // gets the reset button
+const sessionDuration = document.getElementById('sessionDuration'); // gets the session duration dropdown
+
 
 // Add task functionality
 
@@ -11,6 +16,7 @@ const tasks = []; // array to store tasks
 let editingTask = null; // stores the task currently being edited
 let completedCount = 0; // keeps track of the order of completed tasks
 let doingNowTask = null; // stores the task currently being done
+let timeRemaining = Number(sessionDuration.value) * 60 // stores selected duration in seconds
 
 addTaskButton.addEventListener('click', function() { // click event for add task button
     const taskValue = taskInput.value.trim(); // gets the text entered by user, trim removes spaces from beginning and end of string
@@ -278,3 +284,19 @@ function updateTaskCount() { // updates the task count display
     });
     taskCount.textContent = activeTasks.length + " tasks remaining";
 }
+
+// focus timer functionality
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeRemaining / 60); // calculate whole minutes remaining, Math.floor ensures rounding down
+    const seconds = timeRemaining % 60; // calculate seconds
+
+    timerDisplay.textContent = String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0'); // display time as MM:SS, padStart ensures two digits. padStart adds character to the start if needed, padStop adds character to the end if needed
+}
+
+updateTimerDisplay(); 
+
+sessionDuration.addEventListener('change', function() { //runs when the duration dropdown changes
+    timeRemaining = Number(sessionDuration.value) * 60; // converts selected minutes into seconds
+    updateTimerDisplay(); // updates visual timer display
+});
