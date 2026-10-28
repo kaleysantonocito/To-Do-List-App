@@ -8,7 +8,11 @@ const timerDisplay = document.getElementById('timerDisplay'); // gets the elemen
 const startStopButton = document.getElementById('startStopButton'); // gets the start/stop button
 const resetButton = document.getElementById('resetButton'); // gets the reset button
 const sessionDuration = document.getElementById('sessionDuration'); // gets the session duration dropdown
-
+const taskCompletion = document.querySelector('.task-completion'); // gets the element to display task completion
+const finishYes = document.getElementById('finishYes'); // gets the element for the "Yes" button in the finish confirmation
+const finishNo = document.getElementById('finishNo'); // gets the element for the "No" button in the finish confirmation
+// getElementById for finds HTML element by its ID
+// querySelector for finds HTML element using CSS selector
 
 // Add task functionality
 
@@ -18,6 +22,7 @@ let completedCount = 0; // keeps track of the order of completed tasks
 let doingNowTask = null; // stores the task currently being done
 let timeRemaining = Number(sessionDuration.value) * 60 // stores selected duration in seconds
 let timerInterval = null; // stores the countdown interval for the timer
+let completionPending = false; // tracks whether the timer completion question needs an answer
 
 
 addTaskButton.addEventListener('click', function() { // click event for add task button
@@ -103,6 +108,11 @@ function displayTasks() {
         checkbox.checked = task.completed; // sets checkbox based on whether task is completed
 
         checkbox.addEventListener('change', function() { // runs when checkbox is checked or unchecked
+            if (completionPending === true && doingNowTask === task) {
+                checkbox.checked = task.completed; // revert checkbox to previous state
+                return; // prevent changing completion status if completion is pending for the current task
+            }
+            
             task.completed = checkbox.checked; // updates the task's completed status   
             
             if (task.completed == true) {
@@ -139,6 +149,10 @@ function displayTasks() {
         `;
 
         editButton.addEventListener('click', function() { // edit task on click
+            if (completionPending === true && doingNowTask === task) {
+                return; // prevent editing if completion is pending for the current task
+            }
+            
             editingTask = task; // stores the task the user clicked
             displayTasks(); // refresh the task list to reflect the editing state
         });
@@ -154,6 +168,10 @@ function displayTasks() {
         `;
 
         deleteButton.addEventListener('click', function() { // delete task on click
+            if (completionPending === true && doingNowTask === task) {
+                return; // prevent deletion if completion is pending for the current task
+            }
+            
             const index = tasks.indexOf(task); // finds task's position in array
             tasks.splice(index, 1); // removes one task from the array
             
@@ -183,6 +201,10 @@ function displayTasks() {
         }
 
         doingNowButton.addEventListener('click', function() { // runs when Doing Now is clicked
+            if (completionPending === true) {
+                return; // prevent changing task while completion is pending
+            }
+            
             if (doingNowTask === task) { // checks if task is already selected
                 doingNowTask = null; // clears selected task
                 currentTask.textContent = "No task selected"; // clear the current task display area
@@ -239,6 +261,10 @@ function displayTasks() {
             saveButton.className = "save-button"; // assigns CSS class
 
             saveButton.addEventListener("click", function() { // runs when Save Changes is clicked
+                if (completionPending === true && doingNowTask === task) { // checks if the timed task is awaiting confirmation
+                    return; // prevents saving changes until Yes or No is answered
+                }
+                
                 const newTitle = taskInfo.querySelector("input").value.trim(); // gets edited title
 
                 if (newTitle === "") { // checks for an empty title
@@ -247,6 +273,10 @@ function displayTasks() {
                 }
 
                 task.title = newTitle; // saves the new title
+
+                if (doingNowTask === task) { // checks if this is the selected task
+                    currentTask.textContent = task.title; // updates the Focus Session title
+                }
                 
                 // update task priority
                 if (task.priority !== editPriority.value) { // checks if priority has changed
@@ -307,12 +337,20 @@ function updateTimerDisplay() {
 updateTimerDisplay(); 
 
 sessionDuration.addEventListener('change', function() { //runs when the duration dropdown changes
+    if (completionPending === true) {
+        return; // prevent changing session duration if completion is pending
+    }
+    
     timeRemaining = Number(sessionDuration.value) * 60; // converts selected minutes into seconds
     updateTimerDisplay(); // updates visual timer display
 });
 
 // start timer funcitonality 
 function startTimer() { // starts countdown timer 
+    if (completionPending === true || timeRemaining <= 0) { // prevents restarting while awaiting an answer or at zero
+        return;
+    }
+    
     if (timerInterval !== null) { // checks whether timer is already running 
         return; // prevents multiple timers from running simultaneously
     }
@@ -326,6 +364,9 @@ function startTimer() { // starts countdown timer
         if (timeRemaining <= 0) { // checks if countdown has finished
             clearInterval(timerInterval); // stops the timer
             timerInterval = null; // marks the timer as no longer running 
+            sessionDuration.disabled = true; // keeps the dropdown disabled until the completion question is answered
+            completionPending = true; // mark that the timer completion question needs an answer
+            taskCompletion.hidden = false; // display the task completion question, true means element is hidden, false means element is visible 
         }
     }
     , 1000); // interval runs every 1000 milliseconds (1 second)
@@ -337,6 +378,7 @@ startStopButton.addEventListener('click', function() { // handles start/stop but
     if (timerInterval !== null) { // checks if timer is currently running
         clearInterval(timerInterval); // stops the timer
         timerInterval = null; // marks the timer as no longer running
+        sessionDuration.disabled = false; // re-enable the session duration dropdown when the timer is stopped
     } else {
         startTimer(); // starts the timer if it is not already running
     }
@@ -347,11 +389,49 @@ startStopButton.addEventListener('click', function() { // handles start/stop but
 function resetTimer() { // resets the timer to the selected session duration
     clearInterval(timerInterval); // stops the timer
     timerInterval = null; // marks the timer as no longer running
+    sessionDuration.disabled = false; // re-enable the session duration dropdown when the timer is reset
 
     timeRemaining = Number(sessionDuration.value) * 60; // resets the remaining time to the selected session duration
     updateTimerDisplay(); // updates the visual timer display
 }
 
-    resetButton.addEventListener('click', function() { // handles reset button click    
-        resetTimer(); // calls the resetTimer function
-    });
+resetButton.addEventListener('click', function() { // handles reset button click    
+    if (completionPending === true) {
+        return; // prevent resetting if completion is pending for the current task
+    }
+    
+    resetTimer(); // calls the resetTimer function
+});
+
+// timer completion yes button
+
+finishYes.addEventListener('click', function() { // handles the "Yes" button click for task completion
+    if (doingNowTask !== null) { // makes sure a task is selected
+        doingNowTask.completed = true; // marks the selected task as complete
+
+        completedCount++; // increases the completion counter
+        doingNowTask.completionOrder = completedCount; // records when the task was completed
+
+        doingNowTask = null; // clears selected task
+        currentTask.textContent = "No task selected" // resets focus session title
+    }
+
+    taskCompletion.hidden = true; // hides the task completion question
+    resetTimer(); // resets the timer
+    startStopButton.disabled = true; // disables the start/stop button until new task is selected
+
+    updateTaskCount(); // updates remaining tasks
+    displayTasks(); // refreshes the task list display
+    completionPending = false; // mark that the timer completion question has been answered
+});
+
+// timer completion no button
+
+finishNo.addEventListener('click', function() { // handles the "No" button click for task completion
+    taskCompletion.hidden = true; // hides the task completion question
+    resetTimer(); // resets the timer
+    displayTasks(); // refreshes the task list display
+    completionPending = false; // mark that the timer completion question has been answered
+});
+
+
