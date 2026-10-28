@@ -292,3 +292,51 @@ input[type="checkbox"]:checked {
     border: 2px solid #84966B;
     background-color: #E8EEDF;
 }
+
+/* task completion buttons */
+
+.task-completion {
+    background-color: #E8EEDF;
+    border: 1px solid #D2DDCC;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.task-completion p {
+    color: #405842;
+    margin-bottom: 14px;
+}
+
+.completion-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.completion-buttons button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+#finishYes {
+    background-color: #405842;
+    color: white;
+    border: 1px solid #405842;
+}
+
+#finishNo {
+    background-color: #FFFDF8;
+    color: #405842;
+    border: 1px solid #405842;
+}
+
+#finishYes:hover {
+    background-color: #304532;
+}
+
+#finishNo:hover {
+    background-color: #D2DDCC;
+}
