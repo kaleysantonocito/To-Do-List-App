@@ -317,6 +317,8 @@ function startTimer() { // starts countdown timer
         return; // prevents multiple timers from running simultaneously
     }
 
+    sessionDuration.disabled = true; // disable the session duration dropdown while the timer is running
+
     timerInterval = setInterval(function() { // runs this every second
         timeRemaining--; // subtracts 1 second from remaining time 
         updateTimerDisplay(); // updates the visual timer display
