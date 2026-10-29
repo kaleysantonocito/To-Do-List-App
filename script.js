@@ -41,7 +41,9 @@ addTaskButton.addEventListener('click', function() { // click event for add task
     };
 
     tasks.push(task); // add the task to the tasks array, push() adds an element to the end of the array
-    
+    taskInput.value = ""; // clears the task input field
+    taskPriority.value = "Low"; // resets the priority to default value
+
     updateTaskCount(); // update the task count
 
     displayTasks(); // call displayTasks function to update the task list
@@ -202,7 +204,7 @@ function displayTasks() {
         if (doingNowTask === task) { // checks if this task is selected
             doingNowButton.classList.add('selected'); // styles the selected task button
         }
-        
+
         // disable doing now button if the task is already completed
         if (task.completed === true) {
             doingNowButton.disabled = true; 
