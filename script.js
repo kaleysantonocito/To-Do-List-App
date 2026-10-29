@@ -128,7 +128,11 @@ function displayTasks() {
             }
             else {
                 task.completionOrder = null; // reset the completion order when task is unchecked
-            }
+            
+                const index = tasks.indexOf(task); // finds task position in array
+                tasks.splice(index, 1); // removes task from current position
+                tasks.push(task); // adds task to end of the array
+                }
 
             updateTaskCount(); // update the task count
             displayTasks(); // refresh the task list to reflect the change
