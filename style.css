@@ -340,3 +340,10 @@ input[type="checkbox"]:checked {
 #finishNo:hover {
     background-color: #D2DDCC;
 }
+
+/* doing now button */
+
+.doing-now-button.selected {
+    background-color: #405842;
+    color: white;
+}

@@ -197,7 +197,11 @@ function displayTasks() {
 
         const doingNowButton = document.createElement('button'); // creates the "Doing Now" button
         doingNowButton.className = 'doing-now-button'; // applies doing-now-button CSS class
-        doingNowButton.textContent = 'Doing Now'; // sets the button text
+        doingNowButton.textContent = doingNowTask === task ? "Doing Now" : "Select Task"; // displays "Doing Now" if this task is the current one, otherwise "Select Task"
+        
+        if (doingNowTask === task) { // checks if this task is selected
+            doingNowButton.classList.add('selected'); // styles the selected task button
+        }
         
         // disable doing now button if the task is already completed
         if (task.completed === true) {
