@@ -4,7 +4,7 @@ An interactive to do list application designed to help users organize their task
 
 ## Features
 
-- **Taak Management:** Add, edit, delete, complete, and restore tasks.
+- **Task Management:** Add, edit, delete, complete, and restore tasks.
 - **Task Prioritization:** Assign tasks a high, medium, or low importance level. Active tasks are automatically organized by priority.
 - **Doing Now:** Select one active task to focus on at a time.
 - **Focus Time:** Set a countdown timer between 10 and 120 minutes in 10 minute time increments.
